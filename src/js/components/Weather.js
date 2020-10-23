@@ -1,10 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import Mp4 from "../../assets/videos/back.mp4"
 import Webm from "../../assets/videos/back.webm"
-import {ReactComponent as windiest} from "../../assets/icons/Weather/weather_downpour_sun.svg";
+import {ReactComponent as ClearSky} from "../../assets/icons/Weather/weather_sun.svg";
+import {ReactComponent as WeatherCloud} from "../../assets/icons/Weather/weather_cloud.svg";
+import {ReactComponent as VariableSun} from "../../assets/icons/Weather/weather_variable_sun.svg";
+import {ReactComponent as ShowerRain} from "../../assets/icons/Weather/weather_rain.svg";
+import {ReactComponent as Rain} from "../../assets/icons/Weather/weather_rain_sun.svg";
+import {ReactComponent as Thunderstorm} from "../../assets/icons/Weather/weather_storm_sun.svg";
+import {ReactComponent as Snow} from "../../assets/icons/Weather/weather_snow_sun.svg";
+import {ReactComponent as Mist} from "../../assets/icons/Weather/weather_fog_sun.svg";
+
+
 import publicIp from "public-ip";
-import axios from "axios";
 import dayjs from "dayjs";
 import data from './data.json';
 
@@ -12,11 +20,6 @@ const Main = styled.div`
 background-color: ${ props => props.theme["DarkBack"]};
 `;
 
-const Icon = styled(windiest)`
-width: 4rem;
-height: 4rem;
-fill: ${ props => props.theme["LightText"]};
-`;
 
 const Background = styled.div`
 height: 100vh;
@@ -29,7 +32,6 @@ top: 50%;
 left: 50%;
 transform: translate(-50%, -50%);
 object-fit: contain;
-opacity: .8;
 `
 
 const Section = styled.div`
@@ -55,6 +57,16 @@ const SideBarListItem = styled.div`
 color: ${ props => props.theme["LightText"]};
 display: flex;
 justify-content: space-between;
+padding: .8rem 1rem;
+position: relative;
+transition: all .3s;
+cursor: pointer;
+&:not(:last-child){
+border-bottom: 1px ${ props => props.theme["LightText"]} solid;
+}
+&:hover{
+background-color: ${ props => props.theme["DarkText"]} ;
+}
 `
 
 const SideBarListItemLeft = styled.div`
@@ -63,22 +75,29 @@ align-items: center;
 `
 
 const SideBarListItemDate = styled.div`
-font-size: 3rem;
-
+font-size: 2.2rem;
 `
 
 const SideBarListItemRight = styled.div`
-padding: 1rem;
 display: flex;
 flex-direction: column;
 justify-content: space-between;
 `
 
 const SideBarListItemTemp = styled.div`
-font-size: 2.2rem;
+font-size: 2rem;
 height: 4rem;
 
 `
+
+
+const IconWrapper = styled.div`
+.svg{
+width: 3.2rem;
+height: 3.2rem;
+fill: ${ props => props.theme["LightText"]};
+}
+`;
 
 const SideBarListItemIcon = styled.div`
 
@@ -97,15 +116,6 @@ export const WeatherApp = () => {
         return publicIp.v4();
     }
 
-    const week = {
-        0: 'Sun',
-        1: 'Mon',
-        2: 'Tue',
-        3: 'Wed',
-        4: 'Thu',
-        5: 'Fri',
-        6: 'Sat',
-    }
 
     // useEffect( ()=>{
     //     getIp().then( (r)=>{
@@ -120,6 +130,15 @@ export const WeatherApp = () => {
     //  }, []);
 
     const unixToDay = (unix) => {
+        const week = {
+            0: 'Sun',
+            1: 'Mon',
+            2: 'Tue',
+            3: 'Wed',
+            4: 'Thu',
+            5: 'Fri',
+            6: 'Sat',
+        }
         const date = dayjs.unix(unix);
         return week[date['$W']];
     }
@@ -131,6 +150,23 @@ export const WeatherApp = () => {
     const averageTemp = (min, max) => {
         return Math.round(kToC((max + min) / 2));
     }
+
+    const iconChoice = (mood) => {
+        const icons = {
+            'clear sky': <ClearSky className="svg"/>,
+            'few clouds': <VariableSun className="svg"/>,
+            'scattered clouds': <WeatherCloud className="svg"/>,
+            'broken clouds': <WeatherCloud className="svg"/>,
+            'shower rain': <ShowerRain className="svg"/>,
+            'rain': <Rain className="svg"/>,
+            'thunderstorm': <Thunderstorm className="svg"/>,
+            'snow': <Snow className="svg"/>,
+            'mist': <Mist className="svg"/>
+        };
+        console.log(icons[mood])
+        return icons[mood];
+    }
+
 
     return (
         <Main>
@@ -146,7 +182,7 @@ export const WeatherApp = () => {
                             {
                                 data.length > 1
                                 ? data.map((day, key)=>{
-                                    if (key < 6){
+                                    if (key < 7){
                                         return (
                                             <SideBarListItem key={ day.dt }>
                                                 <SideBarListItemLeft>
@@ -154,12 +190,15 @@ export const WeatherApp = () => {
                                                 </SideBarListItemLeft>
                                                 <SideBarListItemRight>
                                                     <SideBarListItemTemp>{averageTemp(day['temp'].max, day['temp'].min)} &deg; C</SideBarListItemTemp>
-                                                    <SideBarListItemIcon><Icon/></SideBarListItemIcon>
+                                                    <SideBarListItemIcon>
+                                                        <IconWrapper>
+                                                            {iconChoice(day['weather'][0].description)}
+                                                        </IconWrapper>
+                                                    </SideBarListItemIcon>
                                                 </SideBarListItemRight>
                                             </SideBarListItem>
-                                        )
-                                    }
-                                })
+                                        )}
+                                    })
                                     : null
                             }
                         </SideBarList>
