@@ -1,10 +1,12 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import Mp4 from "../../assets/videos/back.mp4"
 import Webm from "../../assets/videos/back.webm"
-import { ReactComponent as windiest } from "../../assets/icons/Weather/weather_downpour_sun.svg";
+import {ReactComponent as windiest} from "../../assets/icons/Weather/weather_downpour_sun.svg";
 import publicIp from "public-ip";
 import axios from "axios";
+import dayjs from "dayjs";
+
 
 const Main = styled.div`
 background-color: ${ props => props.theme["DarkBack"]};
@@ -88,24 +90,47 @@ export const WeatherApp = () => {
 
     let getCityUrl;
     let getWeatherUrl;
-
+    const [weather, setWeather] = useState([]);
+    const [error, setError] = useState('');
 
     const getIp = () => {
         return publicIp.v4();
     }
+
+    const week = {
+        0: 'Sun',
+        1: 'Mon',
+        2: 'Tue',
+        3: 'Wed',
+        4: 'Thu',
+        5: 'Fri',
+        6: 'Sat',
+    }
+
     useEffect( ()=>{
         getIp().then( (r)=>{
             getCityUrl = `http://api.ipstack.com/${r}?access_key=94d09010ee5d3975487b51e26f3a1ee4`;
             axios.get(getCityUrl).then((r)=> {
-                console.log(r);
-                getWeatherUrl = `api.openweathermap.org/data/2.5/forecast/daily?q=${r.data["city"]}&cnt=7&appid=a3c729972d8e3f6d5f9a97c6d3a43704`;
+                getWeatherUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${r.data["latitude"]}&lon=${r.data["longitude"]}&appid=1b6866d9113d620d6c30d25e3b474830`
                 axios.get(getWeatherUrl).then((r)=>{
-                    console.log(r);
-                }).catch(e => console.log(e))
+                    setWeather(r.data['daily']);
+                }).catch(e => setError(e));
             })
         });
      }, []);
 
+    const unixToDay = (unix) => {
+        const date = dayjs.unix(unix);
+        return week[date['$W']];
+    }
+
+    const kToC = (k) => {
+        return k - 273.15;
+    }
+
+    const averageTemp = (min, max) => {
+        return Math.round(kToC((max + min) / 2));
+    }
 
     return (
         <Main>
@@ -118,15 +143,23 @@ export const WeatherApp = () => {
                 <Section>
                     <SideBar>
                         <SideBarList>
-                            <SideBarListItem>
-                                <SideBarListItemLeft>
-                                    <SideBarListItemDate>Thu</SideBarListItemDate>
-                                </SideBarListItemLeft>
-                                <SideBarListItemRight>
-                                    <SideBarListItemTemp>23 &deg; C</SideBarListItemTemp>
-                                    <SideBarListItemIcon><Icon/></SideBarListItemIcon>
-                                </SideBarListItemRight>
-                            </SideBarListItem>
+                            {
+                                weather.length > 1
+                                ? weather.map((day)=>{
+                                        console.log(day)
+                                return (
+                                    <SideBarListItem key={ day.dt }>
+                                        <SideBarListItemLeft>
+                                            <SideBarListItemDate>{unixToDay(day.dt)}</SideBarListItemDate>
+                                        </SideBarListItemLeft>
+                                        <SideBarListItemRight>
+                                            <SideBarListItemTemp>{averageTemp(day['temp'].max, day['temp'].min)} &deg; C</SideBarListItemTemp>
+                                            <SideBarListItemIcon><Icon/></SideBarListItemIcon>
+                                        </SideBarListItemRight>
+                                    </SideBarListItem>
+                                )})
+                                    : null
+                            }
                         </SideBarList>
                     </SideBar>
                 </Section>
