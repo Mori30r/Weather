@@ -6,7 +6,7 @@ import {ReactComponent as windiest} from "../../assets/icons/Weather/weather_dow
 import publicIp from "public-ip";
 import axios from "axios";
 import dayjs from "dayjs";
-
+import data from './data.json';
 
 const Main = styled.div`
 background-color: ${ props => props.theme["DarkBack"]};
@@ -107,17 +107,17 @@ export const WeatherApp = () => {
         6: 'Sat',
     }
 
-    useEffect( ()=>{
-        getIp().then( (r)=>{
-            getCityUrl = `http://api.ipstack.com/${r}?access_key=94d09010ee5d3975487b51e26f3a1ee4`;
-            axios.get(getCityUrl).then((r)=> {
-                getWeatherUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${r.data["latitude"]}&lon=${r.data["longitude"]}&appid=1b6866d9113d620d6c30d25e3b474830`
-                axios.get(getWeatherUrl).then((r)=>{
-                    setWeather(r.data['daily']);
-                }).catch(e => setError(e));
-            })
-        });
-     }, []);
+    // useEffect( ()=>{
+    //     getIp().then( (r)=>{
+    //         getCityUrl = `http://api.ipstack.com/${r}?access_key=94d09010ee5d3975487b51e26f3a1ee4`;
+    //         axios.get(getCityUrl).then((r)=> {
+    //             getWeatherUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${r.data["latitude"]}&lon=${r.data["longitude"]}&appid=1b6866d9113d620d6c30d25e3b474830`
+    //             axios.get(getWeatherUrl).then((r)=>{
+    //                 setWeather(r.data['daily']);
+    //             }).catch(e => setError(e));
+    //         })
+    //     });
+    //  }, []);
 
     const unixToDay = (unix) => {
         const date = dayjs.unix(unix);
@@ -144,20 +144,22 @@ export const WeatherApp = () => {
                     <SideBar>
                         <SideBarList>
                             {
-                                weather.length > 1
-                                ? weather.map((day)=>{
-                                        console.log(day)
-                                return (
-                                    <SideBarListItem key={ day.dt }>
-                                        <SideBarListItemLeft>
-                                            <SideBarListItemDate>{unixToDay(day.dt)}</SideBarListItemDate>
-                                        </SideBarListItemLeft>
-                                        <SideBarListItemRight>
-                                            <SideBarListItemTemp>{averageTemp(day['temp'].max, day['temp'].min)} &deg; C</SideBarListItemTemp>
-                                            <SideBarListItemIcon><Icon/></SideBarListItemIcon>
-                                        </SideBarListItemRight>
-                                    </SideBarListItem>
-                                )})
+                                data.length > 1
+                                ? data.map((day, key)=>{
+                                    if (key < 6){
+                                        return (
+                                            <SideBarListItem key={ day.dt }>
+                                                <SideBarListItemLeft>
+                                                    <SideBarListItemDate>{unixToDay(day.dt)}</SideBarListItemDate>
+                                                </SideBarListItemLeft>
+                                                <SideBarListItemRight>
+                                                    <SideBarListItemTemp>{averageTemp(day['temp'].max, day['temp'].min)} &deg; C</SideBarListItemTemp>
+                                                    <SideBarListItemIcon><Icon/></SideBarListItemIcon>
+                                                </SideBarListItemRight>
+                                            </SideBarListItem>
+                                        )
+                                    }
+                                })
                                     : null
                             }
                         </SideBarList>
