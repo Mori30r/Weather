@@ -9,10 +9,6 @@ import {
 } from "./SideBar.elements";
 import { WeatherForDay } from "../../models/WeatherForDay";
 
-
-
-
-
 export const SideNavigationBarListItem = ({ weather }) => {
 
     const thisDay = new WeatherForDay(
