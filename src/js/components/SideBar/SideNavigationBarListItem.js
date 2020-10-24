@@ -56,17 +56,30 @@ const iconChoice = (mood) => {
 }
 
 
-export const SideNavigationBarListItem = ({ day }) => {
+export const SideNavigationBarListItem = ({ weather }) => {
+    class WeatherForDay {
+        constructor(day, minTemp, maxTemp, icon) {
+           this.day = day
+            this.temp = averageTemp(maxTemp, minTemp)
+            this.icon = icon
+        }
+    }
+    const thisDay = new WeatherForDay(
+        unixToDay(weather.dt),
+        weather['temp'].min,
+        weather['temp'].max,
+        iconChoice(weather['weather'][0].description)
+    );
     return (
         <SideBarListItem>
             <SideBarListItemLeft>
-                <SideBarListItemDate>{unixToDay(day.dt)}</SideBarListItemDate>
+                <SideBarListItemDate>{thisDay.day}</SideBarListItemDate>
             </SideBarListItemLeft>
             <SideBarListItemRight>
-                <SideBarListItemTemp>{averageTemp(day['temp'].max, day['temp'].min)} &deg; C</SideBarListItemTemp>
+                <SideBarListItemTemp>{thisDay.temp} &deg; C</SideBarListItemTemp>
                 <SideBarListItemIcon>
                     <IconWrapper>
-                        {iconChoice(day['weather'][0].description)}
+                        {thisDay.icon}
                     </IconWrapper>
                 </SideBarListItemIcon>
             </SideBarListItemRight>

@@ -3,6 +3,7 @@ import Mp4 from "../../../assets/videos/back.mp4";
 import Webm from "../../../assets/videos/back.webm";
 import {Background, Main, Section, Video} from "./Main.elements";
 import {SideNavigationBar} from "../SideBar/SideNavigationBar";
+import {WeatherDetail} from "../WeatherDetail/WeatherDetail";
 
 export const MainApp = () => {
     return (
@@ -15,6 +16,7 @@ export const MainApp = () => {
                 </Video>
                 <Section>
                     <SideNavigationBar/>
+                    <WeatherDetail/>
                 </Section>
             </Background>
         </Main>

@@ -8,10 +8,10 @@ export const SideNavigationBarList = () => {
         <SideBarList>
             {
                 data.length > 1
-                    ? data.map((day, key)=>{
+                    ? data.map((weather, key)=>{
                         if (key < 7){
                             return (
-                                <SideNavigationBarListItem key={ day.dt } day={day}/>
+                                <SideNavigationBarListItem key={ weather.dt } weather={weather}/>
                             )}
                     })
                     : null
