@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
     IconWrapper,
     SideBarListItem,
@@ -8,9 +8,10 @@ import {
     SideBarListItemTemp
 } from "./SideBar.elements";
 import { WeatherForDay } from "../../models/WeatherForDay";
+import {WeatherContext} from "../../Context/WeatherContext";
 
 export const SideNavigationBarListItem = ({ weather }) => {
-
+    const { weatherDispatch } = useContext(WeatherContext);
     const thisDay = new WeatherForDay(
         weather.dt,
         weather['temp'].min,
@@ -19,7 +20,7 @@ export const SideNavigationBarListItem = ({ weather }) => {
     );
 
     return (
-        <SideBarListItem>
+        <SideBarListItem onClick={e => weatherDispatch({ type: 'SET_ACTIVE', active: thisDay.day }) }>
             <SideBarListItemLeft>
                 <SideBarListItemDate>{thisDay.day}</SideBarListItemDate>
             </SideBarListItemLeft>

@@ -10,15 +10,19 @@ import {getWeather} from "./js/Services/GetWeatherData";
 
 
 const App = () => {
-    const [weatherState, weatherDispatch] = useReducer(weatherReducer, undefined, undefined);
-    // getWeather().then((data)=>{
-    //     weatherDispatch({ type: 'GET_WEATHER', weather: data });
-    // });
+    const [weatherState, weatherDispatch] = useReducer(weatherReducer, { loading: true }, undefined);
+
+    useEffect(()=>{
+        getWeather().then((data)=>{
+            weatherDispatch({ type: 'GET_WEATHER', weather: data });
+        });
+    }, []);
+
     return (
         <WeatherContext.Provider value={{ weatherState, weatherDispatch }}>
             <ThemeProvider theme={Theme}>
                 <GlobalStyle/>
-                <MainApp/>
+                { weatherState.loading ? 'loading...' : <MainApp/> }
             </ThemeProvider>
         </WeatherContext.Provider>
     )

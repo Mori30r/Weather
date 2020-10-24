@@ -3,8 +3,15 @@ export const weatherReducer = (state, action) => {
         case 'GET_WEATHER':
             return {
                 ...state,
-                weather: action.weather
+                weather: action.weather,
+                active: action.weather[0].dt,
+                loading: false
             };
+        case 'SET_ACTIVE':
+            return {
+                ...state,
+                active: action.active
+            }
         default:
             return state;
     }
