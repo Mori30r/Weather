@@ -43,18 +43,19 @@ flex-direction: column;
 justify-content: space-between;
 `
 
-export const SideBarListItemTemp = styled.div`
-font-size: 2rem;
-height: 4rem;
-
+export const Temp = styled.div`
+font-size: ${ props => props.size ? props.size : '2rem'};
+height: ${ props => props.height && props.height };
+color: ${ props => props.theme['LightText']};
 `
 
 
 export const IconWrapper = styled.div`
 .svg{
-width: 3.2rem;
-height: 3.2rem;
-fill: ${ props => props.theme["LightText"]};
+opacity: 1;
+width: ${ props => props.size ? props.size : '3.2rem' };
+height: ${ props => props.size ? props.size : '3.2rem' };
+fill: ${ props => props.color ? props.color : props.theme["LightText"]};
 }
 `;
 

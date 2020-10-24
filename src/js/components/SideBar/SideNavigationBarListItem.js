@@ -5,7 +5,7 @@ import {
     SideBarListItemDate, SideBarListItemIcon,
     SideBarListItemLeft,
     SideBarListItemRight,
-    SideBarListItemTemp
+    Temp
 } from "./SideBar.elements";
 import { WeatherForDay } from "../../models/WeatherForDay";
 import {WeatherContext} from "../../Context/WeatherContext";
@@ -20,12 +20,12 @@ export const SideNavigationBarListItem = ({ weather }) => {
     );
 
     return (
-        <SideBarListItem onClick={e => weatherDispatch({ type: 'SET_ACTIVE', active: thisDay.day }) }>
+        <SideBarListItem onClick={e => weatherDispatch({ type: 'SET_ACTIVE', active: weather.dt }) }>
             <SideBarListItemLeft>
                 <SideBarListItemDate>{thisDay.day}</SideBarListItemDate>
             </SideBarListItemLeft>
             <SideBarListItemRight>
-                <SideBarListItemTemp>{thisDay.temp} &deg; C</SideBarListItemTemp>
+                <Temp height={'4rem'} >{thisDay.temp} &deg; C</Temp>
                 <SideBarListItemIcon>
                     <IconWrapper>
                         {thisDay.icon}
