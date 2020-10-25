@@ -30,5 +30,20 @@ justify-content: center;
 `
 
 export const WeatherDetailHeadingWind = styled.div`
+display: flex;
+align-items: center;
+justify-content: space-between;
+flex: 0 0 30%;
+`;
 
+export const WeatherDetailSecond = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: space-around;
+margin: 2rem;
+`;
+
+export const WeatherDetailSecondTempBox = styled.div`
+display: flex;
+flex-direction: column;
 `;

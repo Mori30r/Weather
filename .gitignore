@@ -24,4 +24,4 @@ yarn-debug.log*
 yarn-error.log*
 yarn.lock*
 
-config.js
+src/config.js

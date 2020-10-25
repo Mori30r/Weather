@@ -11,10 +11,12 @@ import React from "react";
 
 
 export class WeatherForDay {
-    constructor(day, minTemp, maxTemp, icon) {
+    constructor(day, minTemp, maxTemp, icon, windSpeed = null, dayTemp = null) {
         this.day = unixToDay(day)
         this.temp = averageTemp(maxTemp, minTemp)
         this.icon = iconChoice(icon)
+        this.windSpeed = windSpeed
+        this.dayTemp = dayTemp
     }
 }
 
@@ -32,8 +34,8 @@ const unixToDay = (unix) => {
     return week[date['$W']];
 }
 
-const kToC = (k) => {
-    return k - 273.15;
+export const kToC = (k) => {
+    return Math.round(k - 273.15);
 }
 
 const averageTemp = (min, max) => {

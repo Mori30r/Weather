@@ -1,5 +1,6 @@
 import publicIp from "public-ip";
 import axios from "axios";
+import config from './../../config';
 
 let getCityUrl;
 let getWeatherUrl;
@@ -16,5 +17,5 @@ export async function getWeather () {
     const location = await axios.get(getCityUrl);
     getWeatherUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${location.data["latitude"]}&lon=${location.data["longitude"]}&appid=${ weatherKey }`
     const weather = await axios.get(getWeatherUrl);
-    return weather.data['daily'];
+    return weather.data['daily']
 }
