@@ -8,19 +8,9 @@ export const SideNavigationBarList = () => {
     const { weatherState } = useContext(WeatherContext);
     return (
         <SideBarList>
-            {
-                data.length > 1
-                    ? data.map((weather, key)=>{
-                        if (key < 7){
-                            return (
-                                <SideNavigationBarListItem key={ weather.dt } weather={weather}/>
-                            )}
-                    })
-                    : null
-            }
             {/*{*/}
-            {/*    weatherState.weather.length > 1*/}
-            {/*        ? weatherState.weather.map((weather, key)=>{*/}
+            {/*    data.length > 1*/}
+            {/*        ? data.map((weather, key)=>{*/}
             {/*            if (key < 7){*/}
             {/*                return (*/}
             {/*                    <SideNavigationBarListItem key={ weather.dt } weather={weather}/>*/}
@@ -28,6 +18,16 @@ export const SideNavigationBarList = () => {
             {/*        })*/}
             {/*        : null*/}
             {/*}*/}
+            {
+                weatherState.weather.length > 1
+                    ? weatherState.weather.map((weather, key)=>{
+                        if (key < 7){
+                            return (
+                                <SideNavigationBarListItem key={ weather.dt } weather={weather}/>
+                            )}
+                    })
+                    : null
+            }
         </SideBarList>
     );
 };

@@ -1,6 +1,6 @@
 import publicIp from "public-ip";
 import axios from "axios";
-import config from './../../config';
+import {config} from '../../config';
 
 let getCityUrl;
 let getWeatherUrl;

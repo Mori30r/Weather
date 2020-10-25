@@ -20,8 +20,8 @@ import { kToC } from "../../models/WeatherForDay";
 
 export const WeatherDetail = () => {
     const { weatherState } = useContext(WeatherContext);
-    // const activatedDayWeather = weatherState.weather.find((obj)=> obj.dt === weatherState.active)
-    const activatedDayWeather = data.find((obj)=> obj.dt === weatherState.active);
+    const activatedDayWeather = weatherState.weather.find((obj)=> obj.dt === weatherState.active)
+    // const activatedDayWeather = data.find((obj)=> obj.dt === weatherState.active);
     console.log(activatedDayWeather)
     const thisDay = new WeatherForDay(
         activatedDayWeather.dt,
