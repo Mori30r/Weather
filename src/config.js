@@ -1,0 +1,4 @@
+export const config = {
+    LOCATION_KEY: '94d09010ee5d3975487b51e26f3a1ee4',
+    WEATHER_KEY: '1b6866d9113d620d6c30d25e3b474830'
+}
