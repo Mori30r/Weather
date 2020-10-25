@@ -43,19 +43,28 @@ flex-direction: column;
 justify-content: space-between;
 `
 
+
 export const Temp = styled.div`
 font-size: ${ props => props.size ? props.size : '2rem'};
 height: ${ props => props.height && props.height };
 color: ${ props => props.theme['LightText']};
+padding: .5rem;
+backface-visibility: hidden;
+transition: all .2s ;
+&:hover{
+transform: rotate(-2deg) scale(1.1);
+}
 `
 
 
 export const IconWrapper = styled.div`
 .svg{
+transition: all .5s;
 opacity: 1;
 width: ${ props => props.size ? props.size : '3.2rem' };
 height: ${ props => props.size ? props.size : '3.2rem' };
 fill: ${ props => props.color ? props.color : props.theme["LightText"]};
+transform: ${ props => props.deg && `rotate(${ props.deg }deg)`};
 }
 `;
 

@@ -11,12 +11,17 @@ import React from "react";
 
 
 export class WeatherForDay {
-    constructor(day, minTemp, maxTemp, icon, windSpeed = null, dayTemp = null) {
+    constructor(day, minTemp, maxTemp, icon, windSpeed, dayTemp, feelsLike, pressure, humidity, clouds, windDeg) {
         this.day = unixToDay(day)
         this.temp = averageTemp(maxTemp, minTemp)
         this.icon = iconChoice(icon)
         this.windSpeed = windSpeed
         this.dayTemp = dayTemp
+        this.feelsLike = feelsLike
+        this.pressure = pressure
+        this.humidity = humidity
+        this.clouds = clouds
+        this.windDeg = windDeg
     }
 }
 

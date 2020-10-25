@@ -33,17 +33,21 @@ export const WeatherDetailHeadingWind = styled.div`
 display: flex;
 align-items: center;
 justify-content: space-between;
-flex: 0 0 30%;
+flex: 0 0 35%;
 `;
 
 export const WeatherDetailSecond = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: space-around;
 margin: 2rem;
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: space-around;
 `;
 
 export const WeatherDetailSecondTempBox = styled.div`
-display: flex;
-flex-direction: column;
+
+`;
+
+export const WeatherDetailSecondFeelsLikeBox = styled.div`
+padding: 2rem 0;
 `;
