@@ -22,12 +22,11 @@ export const WeatherDetail = () => {
     const { weatherState } = useContext(WeatherContext);
     const activatedDayWeather = weatherState.weather.find((obj)=> obj.dt === weatherState.active)
     // const activatedDayWeather = data.find((obj)=> obj.dt === weatherState.active);
-    console.log(activatedDayWeather)
     const thisDay = new WeatherForDay(
         activatedDayWeather.dt,
         activatedDayWeather['temp'].min,
         activatedDayWeather['temp'].max,
-        activatedDayWeather['weather'][0].description,
+        activatedDayWeather['weather'][0].main,
         activatedDayWeather["wind_speed"],
         activatedDayWeather["temp"],
         activatedDayWeather["feels_like"],

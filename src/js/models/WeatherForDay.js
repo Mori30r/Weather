@@ -49,15 +49,12 @@ const averageTemp = (min, max) => {
 
 const iconChoice = (mood) => {
     const icons = {
-        'clear sky': <ClearSky className="svg"/>,
-        'few clouds': <VariableSun className="svg"/>,
-        'scattered clouds': <WeatherCloud className="svg"/>,
-        'broken clouds': <WeatherCloud className="svg"/>,
-        'shower rain': <ShowerRain className="svg"/>,
-        'rain': <Rain className="svg"/>,
-        'thunderstorm': <Thunderstorm className="svg"/>,
-        'snow': <Snow className="svg"/>,
-        'mist': <Mist className="svg"/>
+        'Clear': <ClearSky className="svg"/>,
+        'Clouds': <WeatherCloud className="svg"/>,
+        'Rain': <Rain className="svg"/>,
+        'Thunderstorm': <Thunderstorm className="svg"/>,
+        'Snow': <Snow className="svg"/>,
+        'Mist': <Mist className="svg"/>
     };
     return icons[mood];
 }

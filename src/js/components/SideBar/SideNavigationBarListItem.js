@@ -16,7 +16,7 @@ export const SideNavigationBarListItem = ({ weather }) => {
         weather.dt,
         weather['temp'].min,
         weather['temp'].max,
-        weather['weather'][0].description
+        weather['weather'][0].main
     );
 
     return (
