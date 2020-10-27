@@ -24,7 +24,7 @@ const infiniteRotate = keyframes`
 transform: rotate(0deg);
 }
 100%{
-transform: rotate(360deg);
+transform: rotate(-360deg);
 }
 `;
 
@@ -33,6 +33,6 @@ height: 100vh;
 display: flex;
 justify-content: center;
 align-items: center;
-animation: ${ infiniteRotate } linear 1s;
+animation: ${ infiniteRotate } linear 1s infinite;
 `;
 
