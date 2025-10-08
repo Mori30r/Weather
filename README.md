@@ -1,5 +1,5 @@
 
-## **Weather React**
+## **WeaHere**
 
 Hey 😄 This is a Weather Website with React using Styled Components 💅.
 
